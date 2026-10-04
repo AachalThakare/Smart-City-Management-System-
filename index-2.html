@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Smart City Management System</title>
+<style>
+body{margin:0;font-family:Arial;background:#f2f6fb;color:#172033}
+header{background:linear-gradient(135deg,#123c69,#1976b8);color:white;text-align:center;padding:28px 15px}
+main{max-width:950px;margin:auto;padding:18px}.box{background:white;padding:20px;margin:16px 0;border-radius:14px;box-shadow:0 3px 12px #ccd6e0}
+button{border:0;border-radius:8px;padding:10px 13px;margin:5px;background:#1769aa;color:white;font-weight:bold;cursor:pointer}
+input{padding:10px;border:1px solid #bbb;border-radius:8px;margin:5px;max-width:180px}
+.output{background:#111820;color:#e8f4ec;padding:18px;border-radius:10px;min-height:150px;white-space:pre-wrap;font-family:monospace}
+.menu{display:flex;flex-wrap:wrap;gap:5px}.menu button{background:#245f8d}
+h2{color:#123c69}
+</style>
+</head>
+<body>
+<header><h1>🏙️ SMART CITY MANAGEMENT SYSTEM</h1><p>Interactive Data Structures Mini Project</p></header>
+<main>
+
+<div class="box">
+<h2>🎯 Interactive Project</h2>
+<p>Use the buttons below like the C program. Each feature demonstrates a data structure.</p>
+<div class="menu">
+<button onclick="addCitizen()">👤 Add Citizen</button>
+<button onclick="showCitizens()">👥 Display Citizens</button>
+<button onclick="addEmergency()">🚨 Add Emergency</button>
+<button onclick="handleEmergency()">🛡️ Handle Emergency</button>
+<button onclick="addAction()">⚙️ Add Action</button>
+<button onclick="undoAction()">↩️ Undo Action</button>
+<button onclick="addRoad()">🛣️ Add Road</button>
+<button onclick="showRoads()">🗺️ Show Roads</button>
+<button onclick="showTree()">🌳 City Structure</button>
+<button onclick="clearOutput()">🧹 Clear</button>
+</div>
+</div>
+
+<div class="box">
+<h2>🖥️ Program Output</h2>
+<div id="output" class="output">Welcome to Smart City Management System!
+Choose an operation above...</div>
+</div>
+
+<div class="box">
+<h2>📚 Data Structures Used</h2>
+<p>👥 <b>Linked List:</b> Citizen records</p>
+<p>🚨 <b>Queue:</b> Emergency management (FIFO)</p>
+<p>↩️ <b>Stack:</b> Undo previous actions (LIFO)</p>
+<p>🛣️ <b>Graph:</b> Roads and area connections</p>
+<p>🌳 <b>Tree:</b> City → Areas → Buildings</p>
+</div>
+
+</main>
+
+<script>
+let citizens=[];
+let emergency=[];
+let actions=[];
+let roads=[];
+
+function out(text){document.getElementById("output").textContent=text}
+function addCitizen(){
+ let id=prompt("Enter Citizen ID:","101");
+ if(id===null)return;
+ let name=prompt("Enter Citizen Name:","Prachi");
+ if(name===null)return;
+ citizens.unshift({id:id,name:name});
+ out("Citizen added successfully!\\n\\nID: "+id+" | Name: "+name);
+}
+function showCitizens(){
+ if(!citizens.length)return out("No citizen records found.");
+ out("========== CITIZEN RECORDS ==========\\n"+
+ citizens.map(x=>"ID: "+x.id+" | Name: "+x.name).join("\\n")+
+ "\\n====================================");
+}
+function addEmergency(){
+ let e=prompt("Enter Emergency/Problem:","Fire");
+ if(e===null)return;
+ emergency.push(e);
+ out("Emergency added to queue!\\n\\nQueue: "+emergency.join(" → "));
+}
+function handleEmergency(){
+ if(!emergency.length)return out("No emergency requests.");
+ let e=emergency.shift();
+ out("Handling Emergency: "+e+"\\n\\nEmergency handled successfully!");
+}
+function addAction(){
+ let a=prompt("Enter Action:","Cleaning");
+ if(a===null)return;
+ actions.push(a);
+ out("Action added successfully!\\n\\nStack top: "+a);
+}
+function undoAction(){
+ if(!actions.length)return out("Nothing to undo.");
+ let a=actions.pop();
+ out("Undo Action: "+a+"\\n\\nAction undone successfully!");
+}
+function addRoad(){
+ let a=prompt("Enter first Area number (0-4):","0");
+ if(a===null)return;
+ let b=prompt("Enter second Area number (0-4):","1");
+ if(b===null)return;
+ a=Number(a);b=Number(b);
+ if(!Number.isInteger(a)||!Number.isInteger(b)||a<0||a>4||b<0||b>4)
+   return out("Invalid area number!");
+ roads.push([a,b]);
+ out("Road added successfully!\\n\\nArea "+a+" <--> Area "+b);
+}
+function showRoads(){
+ if(!roads.length)return out("No roads added yet.");
+ out("========== CITY ROADS ==========\\n"+
+ roads.map(r=>"Area "+r[0]+" <--> Area "+r[1]).join("\\n")+
+ "\\n================================");
+}
+function showTree(){
+ out("========== CITY STRUCTURE ==========\\n"+
+"|-- Smart City\\n"+
+"   |-- Area A\\n"+
+"      |-- Building 1\\n"+
+"      |-- Building 2\\n"+
+"   |-- Area B\\n"+
+"      |-- Building 3\\n"+
+"      |-- Building 4\\n"+
+"====================================");
+}
+function clearOutput(){out("Output cleared. Choose an operation above...")}
+</script>
+</body>
+</html>
